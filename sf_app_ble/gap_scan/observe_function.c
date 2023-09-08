@@ -244,7 +244,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 							}
 
 	 //--------------------------------------------------------------------------------
-					       // WICED_BT_TRACE("DATA1 %d, %d\n", dataFiltC[0], dataFiltC[1]);
+					        // WICED_BT_TRACE("DATA1 %d, %d\n", dataFiltC[0], dataFiltC[1]);
 
 					        if(dataFiltCED[0]>230){dataFiltCED[0]=0;};
 					        if(dataFiltCED[1]>230){dataFiltCED[1]=0;};
