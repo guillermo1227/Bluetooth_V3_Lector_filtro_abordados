@@ -2207,19 +2207,19 @@ void exam_gpio(void)
 		gap_cfb(datam_buffer2);
 
 	}*/
-//	if(datac_menviada2>0 && value_ach == WICED_FALSE)
-//	{
-//		Start_Timerach();
-//		value_ach = WICED_TRUE;
-//		WICED_BT_TRACE("ENTER RETR\n");
-//	}
+	if(datac_menviada2>0 && value_ach == WICED_FALSE)
+	{
+		Start_Timerach();
+		value_ach = WICED_TRUE;
+		//WICED_BT_TRACE("ENTER RETR\n");
+	}
 
-//	if(datac_menviadaV2>0 && value_ach == WICED_FALSE)
-//	{
-//		Start_Timerach();
-//		value_achV = WICED_TRUE;
-//		WICED_BT_TRACE("ENTER RETRV\n");
-//	}
+	if(datac_menviadaV2>0 && value_ach == WICED_FALSE)
+	{
+		Start_Timerach();
+		value_achV = WICED_TRUE;
+		//WICED_BT_TRACE("ENTER RETRV\n");
+	}
 
 }
 
