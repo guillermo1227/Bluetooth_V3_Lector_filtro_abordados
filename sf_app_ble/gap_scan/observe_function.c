@@ -1362,9 +1362,9 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
      		    			    start_TreturnfA();
      						}*/
 
-     						 char *p_dataDm2 = strstr(datam_buffer2,dataV_DM);
-     						 if(!p_dataDm2)
-     						 {
+//     						 char *p_dataDm2 = strstr(datam_buffer2,dataV_DM);
+//     						 if(!p_dataDm2)
+//     						 {
          		    			    //WICED_BT_TRACE("RSSI FILT\n");
          		    			    value_AL=WICED_TRUE;
          		    			    wiced_hal_gpio_set_pin_output( LED_GPIO_04, GPIO_PIN_OUTPUT_HIGH);
@@ -1376,7 +1376,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
          		    			      start_alrm();
          		    			    }
 
-     						 }
+     						// }
 
      					}
      					else
@@ -1388,9 +1388,9 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
      		    		        wiced_hal_gpio_set_pin_output( LED_GPIO_17, GPIO_PIN_OUTPUT_HIGH);
      		    		        start_TreturnfA();
      						}*/
-     						 char *p_dataDm2 = strstr(datam_buffer2,dataV_DM);
-     						 if(!p_dataDm2)
-     						 {
+//     						 char *p_dataDm2 = strstr(datam_buffer2,dataV_DM);
+//     						 if(!p_dataDm2)
+//     						 {
          		    			    //WICED_BT_TRACE("RSSI FILT\n");
          		    			    value_AL=WICED_TRUE;
          		    		        wiced_hal_gpio_set_pin_output( LED_GPIO_04, GPIO_PIN_OUTPUT_HIGH);
@@ -1402,7 +1402,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
          		    			      start_alrm();
          		    			    }
 
-     						 }
+     						// }
 
      					}
 
@@ -1416,9 +1416,9 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
     					if(datac_mV > datac_menviadaV)
     					{
     						 //WICED_BT_TRACE("CVL%d,",datac_mV - datac_menviadaV2);  //  SCL2
-    						 char *p_dataDmV2 = strstr(datam_bufferV2,dataV_DMV);
-    						 if(!p_dataDmV2)
-    						 {
+//    						 char *p_dataDmV2 = strstr(datam_bufferV2,dataV_DMV);
+//    						 if(!p_dataDmV2)
+//    						 {
         		    			    //WICED_BT_TRACE("RSSI FILTV\n");
         		    			    value_AV=WICED_TRUE;
         		    			    wiced_hal_gpio_set_pin_output( LED_GPIO_04, GPIO_PIN_OUTPUT_HIGH);
@@ -1430,14 +1430,14 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
         		    			      start_alrm();
         		    			    }
 
-    						 }
+    						 //}
     					}
     					else
     					{
     						 //WICED_BT_TRACE("CVL%d,",datac_mV - datac_menviadaV2);  //  SCL2
-    						 char *p_dataDmV2 = strstr(datam_bufferV2,dataV_DMV);
-    						 if(!p_dataDmV2)
-    						 {
+//    						 char *p_dataDmV2 = strstr(datam_bufferV2,dataV_DMV);
+//    						 if(!p_dataDmV2)
+//    						 {
         		    			    //WICED_BT_TRACE("RSSI FILTV\n");
         		    			    value_AV=WICED_TRUE;
         		    			    wiced_hal_gpio_set_pin_output( LED_GPIO_04, GPIO_PIN_OUTPUT_HIGH);
@@ -1449,7 +1449,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
         		    			      start_alrm();
         		    			    }
 
-    						 }
+    						// }
     					}
 
     			   }
