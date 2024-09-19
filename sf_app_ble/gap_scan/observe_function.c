@@ -987,7 +987,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 
 
 
-		   	   		  WICED_BT_TRACE("BNM:");
+		   	   		  WICED_BT_TRACE("BNM|");
 	   	      	      WICED_BT_TRACE("%02X",dataFiltR[0]);
 	   				  for(int k=1; k<=5; k++)
 	   				  {
@@ -1061,7 +1061,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 		   	   	   else if(memcmp(Filt_operate101, dataFiltEA, sizeof(dataFiltEA)) == 0 ||
 		   	    	   memcmp(Filt_operate101, dataFiltEA, sizeof(dataFiltEA)) == 0 ){//filtro de nombres
 
-		   	      	      WICED_BT_TRACE("BNM:");
+		   	      	      WICED_BT_TRACE("BNM|");
 		   	      	      WICED_BT_TRACE("%02X",dataFiltR[0]);
 		   				  for(int k=1; k<=5; k++)
 		   				  {
@@ -1115,18 +1115,37 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 		   	    	 if(memcmp(Filt_operate103, dataFiltBC, sizeof(dataFiltBC)) == 0 ||
 		   	    	    	memcmp(Filt_operate103, dataFiltBC, sizeof(dataFiltBC)) == 0 )
 		   	    	{
-//		   	      	      WICED_BT_TRACE("BNM:");
-//		   	      	      WICED_BT_TRACE("%02X",dataFiltR[0]);
-//		   				  for(int k=1; k<=5; k++)
-//		   				  {
-//		   				    WICED_BT_TRACE(":%02X",dataFiltR[k]);
-//		   				  }
-//		   				  WICED_BT_TRACE(",BEAC,%d",p_scan_result->rssi);
-//		   				  WICED_BT_TRACE(",0\n");
-		   	    	      //WICED_BT_TRACE( "%B\n", static_addr );
-		       		      //wiced_hal_gpio_set_pin_output( LED_GPIO_03, GPIO_PIN_OUTPUT_HIGH);
-		       		      //WICED_BT_TRACE("SPIN 11 HIGH\n");
-		   				  //start_TreturnfB();
+		   	    		WICED_BT_TRACE("BNM|");
+		   	    		WICED_BT_TRACE("%02X",dataFiltR[0]);
+		   	    		for(int k=1; k<=5; k++)
+		   	    		{
+		   	    			WICED_BT_TRACE(":%02X",dataFiltR[k]);
+		   	    		}
+		   	    		WICED_BT_TRACE(",BEAC,%d",p_scan_result->rssi);
+		   	    		WICED_BT_TRACE(",0\n");
+
+		   	    		//WICED_BT_TRACE( "%B\n", static_addr );
+		   	    		wiced_hal_gpio_set_pin_output( LED_GPIO_03, GPIO_PIN_OUTPUT_HIGH);
+		   	    		//WICED_BT_TRACE("SPIN 11 HIGH\n");
+		   	    		start_TreturnfB();
+		   	    	}
+
+		   	    	if(memcmp(Filt_GEOSF, dataFiltBC, sizeof(dataFiltBC)) == 0 ||
+		   	    			memcmp(Filt_GEOSF, dataFiltBC, sizeof(dataFiltBC)) == 0 )
+		   	    	{
+		   	    		/* Descomentar */
+		   	    		WICED_BT_TRACE("BNM|");
+		   	    		WICED_BT_TRACE("%02X",dataFiltR[0]);
+		   	    		for(int k=1; k<=5; k++)
+		   	    		{
+		   	    			WICED_BT_TRACE(":%02X",dataFiltR[k]);
+		   	    		}
+		   	    		WICED_BT_TRACE(",GEOSF,%d",p_scan_result->rssi);
+		   	    		WICED_BT_TRACE(",0\n");
+		   	    		//WICED_BT_TRACE( "%B\n", static_addr );
+		   	    		//wiced_hal_gpio_set_pin_output( LED_GPIO_03, GPIO_PIN_OUTPUT_HIGH);
+		   	    		//WICED_BT_TRACE("SPIN 11 HIGH\n");
+		   	    		//start_TreturnfB();
 		   	    	}
 
 		   	      memcpy(dataFiltLV, p_name, 5);
@@ -1135,7 +1154,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 		   	    	    	memcmp(Filt_operate1, dataFiltLV, sizeof(dataFiltLV)) == 0 )
 		   	    	{
 
-		   	      	      WICED_BT_TRACE("BNM:");
+		   	      	      WICED_BT_TRACE("BNM|");
 		   	      	      WICED_BT_TRACE("%02X",dataFiltR[0]);
 		   				  for(int k=1; k<=5; k++)
 		   				  {
@@ -1154,7 +1173,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 		   	    	    	memcmp(Filt_operate2, dataFiltLV, sizeof(dataFiltLV)) == 0 )
 		   	    	{
 
-		   	      	      WICED_BT_TRACE("BNM:");
+		   	      	      WICED_BT_TRACE("BNM|");
 		   	      	      WICED_BT_TRACE("%02X",dataFiltR[0]);
 		   				  for(int k=1; k<=5; k++)
 		   				  {
