@@ -28,10 +28,11 @@
 #include "wiced_memory.h"
 #include "wiced_bt_cfg.h"
 
+#include "wiced_memory.h"
+
 #include "observe_function.h"
 #include "config_ports.h"
 #include "wiced_hal_gpio.h"
-
 
 void    start_observe(void)
 {
@@ -47,9 +48,15 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
     uint8_t                length;
     uint8_t                i = 0;
     uint8_t *              p_data;
+//    p_name_L= (uint8_t *)wiced_memory_permanent_allocate(20); // Asignar espacio para 20 bytes
+//    if(p_name_L == NULL)
+//    {
+//    	WICED_BT_TRACE("Eroor en el asignamiento de la memoria\n");
+//    }
 
    	uint8_t *p_name=NULL;
-    p_name= &p_adv_data[5];
+    p_name  = &p_adv_data[5];
+    p_name_L= &p_adv_data[5];
     uint8_t data_long=NULL;
     data_long=strlen(p_name);
 
@@ -65,6 +72,9 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
     uint8_t dataFiltcerMED[6];
 
     //-----------------------------------------------------------------------------------
+//    memcpy(dataFilterED, p_name_L, 3);
+//   WICED_BT_TRACE("*************>%B\n",dataFilterED);
+
     memcpy(dataFilterED, p_name, 3);
     //------------------------------------------------------------------------------
     if(memcmp(Filt_comanED1, dataFilterED, sizeof(dataFilterED))  == 0 ||
@@ -75,7 +85,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 	    WICED_BT_TRACE( "\n");*/
     	memcpy(dataFiltcerMED, &p_name[3], 6);
 
-	    if( memcmp(static_addr, dataFiltcerMED, sizeof(dataFiltcerMED)) == 0)
+	    if( memcmp(static_addr, dataFiltcerMED, sizeof(dataFiltcerMED)) == 0) /* Aqui empiza   Aqui checa si la mac con la que transmite es la suya */
 	    {
 	    	memcpy(dataFiltCED, &p_name[9], 2);
 	    	memcpy(dataFiltALV, &p_name[11], 1);
@@ -114,6 +124,124 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 	    	return;
 	    }
     }
+
+    //------------------------------------------------------------------------------
+    //memcpy(dataFilterED2,p_name_L, 3);
+//    if(memcmp(Filt_comanED1, dataFilterED2, sizeof(dataFilterED2))  == 0 ||
+//		memcmp(Filt_comanED1, dataFilterED2, sizeof(dataFilterED2))  == 0)
+    if(memcmp(Filt_comanED1, dataFilterED, sizeof(dataFilterED2))  == 0 ||
+    	memcmp(Filt_comanED1, dataFilterED, sizeof(dataFilterED2))  == 0)
+    {
+    	WICED_BT_TRACE("DatacrlALV2: %d\n",dataFiltALV[0]);
+    	if(dataFiltALV[0]== 4 || dataFiltALV[0]== 12)  /* Aqui incia    4 alerta lamparas,   12 tags y lamparas, 8 solo lamparas */
+    	{
+    		//WICED_BT_TRACE("DatacrlALV3: %d\n",dataFiltALV[0]);
+    		if(p_scan_result->rssi>=-125 &&  gap_t1 == WICED_FALSE)
+    		{
+    			WICED_BT_TRACE("SERALAAAAAAAAAAAAAAAAAAAARM\n");
+    			if(datac_m > datac_menviada)
+    			{
+				/*if((datac_m - datac_menviada2)!=0)
+							{
+								//WICED_BT_TRACE("%d\n",datac_m - datac_menviada2);  //  SCL2
+								//WICED_BT_TRACE("RSSI FILT\n");
+								wiced_hal_gpio_set_pin_output( LED_GPIO_17, GPIO_PIN_OUTPUT_HIGH);
+								start_TreturnfA();
+							}*/
+
+//     						 char *p_dataDm2 = strstr(datam_buffer2,dataV_DM);
+//     						 if(!p_dataDm2)
+//     						 {
+									WICED_BT_TRACE("RSSI FILT\n");
+					value_AL=WICED_TRUE;
+					wiced_hal_gpio_set_pin_output( LED_GPIO_04, GPIO_PIN_OUTPUT_HIGH);
+					//start_TreturnfA();
+					start_TreturnfAR();
+					if(value_alrm)
+					{
+						value_alrm=WICED_FALSE;
+						start_alrm();
+					}
+
+					// }
+
+				}
+				else
+				{
+					/*if((datac_menviada - datac_menviada2)!=0)
+							{
+								//WICED_BT_TRACE("%d\n",datac_menviada - datac_menviada2); //  SCL3
+								//WICED_BT_TRACE("RSSI FILT\n");
+								wiced_hal_gpio_set_pin_output( LED_GPIO_17, GPIO_PIN_OUTPUT_HIGH);
+								start_TreturnfA();
+							}*/
+//     						 char *p_dataDm2 = strstr(datam_buffer2,dataV_DM);
+//     						 if(!p_dataDm2)
+//     						 {
+									//WICED_BT_TRACE("RSSI FILT\n");
+					value_AL=WICED_TRUE;
+					wiced_hal_gpio_set_pin_output( LED_GPIO_04, GPIO_PIN_OUTPUT_HIGH);
+					//start_TreturnfA();
+					start_TreturnfAR();
+					if(value_alrm)
+					{
+						value_alrm=WICED_FALSE;
+						start_alrm();
+					}
+
+							// }
+
+				}
+
+			}
+		}
+    	//----------------------------------------------
+    	if(dataFiltALV[0]== 8 || dataFiltALV[0]== 12)
+    	{
+    		if(p_scan_result->rssi>=-125 &&  gap_t1 == WICED_FALSE)
+    		{
+    			if(datac_mV > datac_menviadaV)
+    			{
+							 //WICED_BT_TRACE("CVL%d,",datac_mV - datac_menviadaV2);  //  SCL2
+//    						 char *p_dataDmV2 = strstr(datam_bufferV2,dataV_DMV);
+//    						 if(!p_dataDmV2)
+//    						 {
+    				//WICED_BT_TRACE("RSSI FILTV\n");
+    				value_AV=WICED_TRUE;
+    				wiced_hal_gpio_set_pin_output( LED_GPIO_04, GPIO_PIN_OUTPUT_HIGH);
+    				//start_TreturnfAV();
+    				start_TreturnfAVR();
+    				if(value_alrm)
+    				{
+    					value_alrm=WICED_FALSE;
+    					start_alrm();
+    				}
+
+				//}
+    			}
+    			else
+    			{
+							 //WICED_BT_TRACE("CVL%d,",datac_mV - datac_menviadaV2);  //  SCL2
+//    						 char *p_dataDmV2 = strstr(datam_bufferV2,dataV_DMV);
+//    						 if(!p_dataDmV2)
+//    						 {
+    				//WICED_BT_TRACE("RSSI FILTV\n");
+    				value_AV=WICED_TRUE;
+    				wiced_hal_gpio_set_pin_output( LED_GPIO_04, GPIO_PIN_OUTPUT_HIGH);
+    				//start_TreturnfAV();
+    				start_TreturnfAVR();
+    				if(value_alrm)
+    				{
+    					value_alrm=WICED_FALSE;
+    					start_alrm();
+    				}
+
+				// }
+    			}
+
+    		}
+    	}
+    }
     //--------------------------------------------------------------------------
     memcpy(dataFilter, &p_name[6], 3);
 
@@ -144,7 +272,6 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 
     }
    //----------------------------------------------------------------------------
-
     if ( p_scan_result )
     {
     	memcpy(dataFilt5,p_scan_result->remote_bd_addr,6);
@@ -189,10 +316,10 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 
     	      //----------------------------------------------------------
     	      st_Tipe =
-    	      (memcmp(Filt_operate1,  dataFilt, sizeof(dataFilt)) == 0 ? 0x00 :
-    	      (memcmp(Filt_operate20, dataFilt, sizeof(dataFilt)) == 0 ? 0x01 :
-    	      (memcmp(Filt_operate30, dataFilt, sizeof(dataFilt)) == 0 ? 0x0b :
-    	      (memcmp(Filt_ggg,  dataFilt, sizeof(dataFilt)) == 0 ? 0x0a :
+    	      (memcmp(Filt_operate1,  dataFilt, sizeof(dataFilt)) == 0 ? 0x00 :		/* L4SEC */
+    	      (memcmp(Filt_operate20, dataFilt, sizeof(dataFilt)) == 0 ? 0x01 :		/* 1A5EC */
+    	      (memcmp(Filt_operate30, dataFilt, sizeof(dataFilt)) == 0 ? 0x0b :		/* 1AIRD */
+    	      (memcmp(Filt_ggg,  dataFilt, sizeof(dataFilt)) == 0 ? 0x0a :			/* L41RD */
     		  (memcmp(Filt_operate2,  dataFilt, sizeof(dataFilt)) == 0 ? 0x0a : 0x14 )))));
     	      //-----------------------------------------------------------
     		  //WICED_BT_TRACE("NUMERO1:%d  \n",st_Tipe);
@@ -200,20 +327,20 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 
     	      //------------------------------------------------------------------
 
-    			if(st_Tipe==0x00 || st_Tipe==0x01)
+    			if(st_Tipe==0x00 || st_Tipe==0x01)		/* Entra cuando es una lampara L4SEC */
     			{
-    			   memcpy(dataV_DM,data_flt,6);
+    			   memcpy(dataV_DM,data_flt,6);			/* data_flt --> Mac del dispositivo que lee */
     		   	   char *p_dataDm = strstr(datam_buffer,dataV_DM);
     			   if(!p_dataDm)
     			   {
-    				   if( gap_t1 == WICED_FALSE )
+    				   if( gap_t1 == WICED_FALSE )			/* uando entra aqui? */
     				   {
 						  memcpy(&datam_buffer[data_mc3],dataV_DM,6);
 						  data_mc3+=6;
 						  datac_m++;
 						  if(!value_notif)
 						  {
-							  wiced_hal_gpio_set_pin_output(LED_GPIO_01, GPIO_PIN_OUTPUT_HIGH);
+							  wiced_hal_gpio_set_pin_output(LED_GPIO_01, GPIO_PIN_OUTPUT_HIGH);  /* Enciende led personas */
 							  value_p1=WICED_TRUE;
 							  value_pa1=WICED_FALSE;
 							  //WICED_BT_TRACE("PIN 14 HIGH xx:%d  \n",datac_m);
@@ -1274,6 +1401,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
     	    		 }
     	    		 else
     	    		 {
+    	    			 //WICED_BT_TRACE("Return 1\n");
     	    			 return;
     	    		 }
 
@@ -1359,122 +1487,122 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
     //-----------------------------------------------------------------------
         	   //-----------Filtro ED
 
-        	    memcpy(dataFilterED2, p_name, 3);
-        	    //------------------------------------------------------------------------------
-        	    if(memcmp(Filt_comanED1, dataFilterED2, sizeof(dataFilterED2))  == 0 ||
-        	       memcmp(Filt_comanED1, dataFilterED2, sizeof(dataFilterED2))  == 0)
-        	    {
-        	    	//WICED_BT_TRACE("DatacrlALV2: %d\n",dataFiltALV[0]);
-        	    	if(dataFiltALV[0]== 4 || dataFiltALV[0]== 12)
-        	    	{
-        	    		//WICED_BT_TRACE("DatacrlALV3: %d\n",dataFiltALV[0]);
-     			   if(p_scan_result->rssi>=-125 &&  gap_t1 == WICED_FALSE)
-     			   {
-     				  //WICED_BT_TRACE("SERALAAAAAAAAAAAAAAAAAAAARM\n");
-     					if(datac_m > datac_menviada)
-     					{
-     						/*if((datac_m - datac_menviada2)!=0)
-     						{
-     							//WICED_BT_TRACE("%d\n",datac_m - datac_menviada2);  //  SCL2
-     		    			    //WICED_BT_TRACE("RSSI FILT\n");
-     		    			    wiced_hal_gpio_set_pin_output( LED_GPIO_17, GPIO_PIN_OUTPUT_HIGH);
-     		    			    start_TreturnfA();
-     						}*/
-
-//     						 char *p_dataDm2 = strstr(datam_buffer2,dataV_DM);
-//     						 if(!p_dataDm2)
-//     						 {
-         		    			    //WICED_BT_TRACE("RSSI FILT\n");
-         		    			    value_AL=WICED_TRUE;
-         		    			    wiced_hal_gpio_set_pin_output( LED_GPIO_04, GPIO_PIN_OUTPUT_HIGH);
-         		    			    //start_TreturnfA();
-         		    			    start_TreturnfAR();
-         		    			    if(value_alrm)
-         		    			    {
-         		    			   	  value_alrm=WICED_FALSE;
-         		    			      start_alrm();
-         		    			    }
-
-     						// }
-
-     					}
-     					else
-     					{
-     						/*if((datac_menviada - datac_menviada2)!=0)
-     						{
-     							//WICED_BT_TRACE("%d\n",datac_menviada - datac_menviada2); //  SCL3
-     		    			    //WICED_BT_TRACE("RSSI FILT\n");
-     		    		        wiced_hal_gpio_set_pin_output( LED_GPIO_17, GPIO_PIN_OUTPUT_HIGH);
-     		    		        start_TreturnfA();
-     						}*/
-//     						 char *p_dataDm2 = strstr(datam_buffer2,dataV_DM);
-//     						 if(!p_dataDm2)
-//     						 {
-         		    			    //WICED_BT_TRACE("RSSI FILT\n");
-         		    			    value_AL=WICED_TRUE;
-         		    		        wiced_hal_gpio_set_pin_output( LED_GPIO_04, GPIO_PIN_OUTPUT_HIGH);
-         		    		        //start_TreturnfA();
-         		    		        start_TreturnfAR();
-         		    			    if(value_alrm)
-         		    			    {
-         		    			   	  value_alrm=WICED_FALSE;
-         		    			      start_alrm();
-         		    			    }
-
-     						// }
-
-     					}
-
-     			   }
-        	    }
-     			   //----------------------------------------------
-        	    	if(dataFiltALV[0]== 8 || dataFiltALV[0]== 12)
-        	    	{
-    			   if(p_scan_result->rssi>=-125 &&  gap_t1 == WICED_FALSE)
-    			   {
-    					if(datac_mV > datac_menviadaV)
-    					{
-    						 //WICED_BT_TRACE("CVL%d,",datac_mV - datac_menviadaV2);  //  SCL2
-//    						 char *p_dataDmV2 = strstr(datam_bufferV2,dataV_DMV);
-//    						 if(!p_dataDmV2)
-//    						 {
-        		    			    //WICED_BT_TRACE("RSSI FILTV\n");
-        		    			    value_AV=WICED_TRUE;
-        		    			    wiced_hal_gpio_set_pin_output( LED_GPIO_04, GPIO_PIN_OUTPUT_HIGH);
-        		    			    //start_TreturnfAV();
-        		    			    start_TreturnfAVR();
-        		    			    if(value_alrm)
-        		    			    {
-        		    			   	  value_alrm=WICED_FALSE;
-        		    			      start_alrm();
-        		    			    }
-
-    						 //}
-    					}
-    					else
-    					{
-    						 //WICED_BT_TRACE("CVL%d,",datac_mV - datac_menviadaV2);  //  SCL2
-//    						 char *p_dataDmV2 = strstr(datam_bufferV2,dataV_DMV);
-//    						 if(!p_dataDmV2)
-//    						 {
-        		    			    //WICED_BT_TRACE("RSSI FILTV\n");
-        		    			    value_AV=WICED_TRUE;
-        		    			    wiced_hal_gpio_set_pin_output( LED_GPIO_04, GPIO_PIN_OUTPUT_HIGH);
-        		    			    //start_TreturnfAV();
-        		    			    start_TreturnfAVR();
-        		    			    if(value_alrm)
-        		    			    {
-        		    			   	  value_alrm=WICED_FALSE;
-        		    			      start_alrm();
-        		    			    }
-
-    						// }
-    					}
-
-    			   }
-        	    }
-        	    }
-
+//    memcpy(dataFilterED2,p_name_L, 3);
+//    WICED_BT_TRACE("----->p_name_L %B\n",p_name_L);
+//    //------------------------------------------------------------------------------
+//    if(memcmp(Filt_comanED1, dataFilterED2, sizeof(dataFilterED2))  == 0 ||
+//    		memcmp(Filt_comanED1, dataFilterED2, sizeof(dataFilterED2))  == 0)
+//    {
+//    	WICED_BT_TRACE("DatacrlALV2: %d\n",dataFiltALV[0]);
+//    	if(dataFiltALV[0]== 4 || dataFiltALV[0]== 12)  /* Aqui incia    4 alerta lamparas,   12 tags y lamparas, 8 solo lamparas */
+//    	{
+//    		//WICED_BT_TRACE("DatacrlALV3: %d\n",dataFiltALV[0]);
+//    		if(p_scan_result->rssi>=-125 &&  gap_t1 == WICED_FALSE)
+//    		{
+//    			//WICED_BT_TRACE("SERALAAAAAAAAAAAAAAAAAAAARM\n");
+//    			if(datac_m > datac_menviada)
+//    			{
+//    				/*if((datac_m - datac_menviada2)!=0)
+//     						{
+//     							//WICED_BT_TRACE("%d\n",datac_m - datac_menviada2);  //  SCL2
+//     		    			    //WICED_BT_TRACE("RSSI FILT\n");
+//     		    			    wiced_hal_gpio_set_pin_output( LED_GPIO_17, GPIO_PIN_OUTPUT_HIGH);
+//     		    			    start_TreturnfA();
+//     						}*/
+//
+////     						 char *p_dataDm2 = strstr(datam_buffer2,dataV_DM);
+////     						 if(!p_dataDm2)
+////     						 {
+//         		    			    //WICED_BT_TRACE("RSSI FILT\n");
+//    				value_AL=WICED_TRUE;
+//    				wiced_hal_gpio_set_pin_output( LED_GPIO_04, GPIO_PIN_OUTPUT_HIGH);
+//    				//start_TreturnfA();
+//    				start_TreturnfAR();
+//    				if(value_alrm)
+//    				{
+//    					value_alrm=WICED_FALSE;
+//    					start_alrm();
+//    				}
+//
+//    				// }
+//
+//    			}
+//    			else
+//    			{
+//    				/*if((datac_menviada - datac_menviada2)!=0)
+//     						{
+//     							//WICED_BT_TRACE("%d\n",datac_menviada - datac_menviada2); //  SCL3
+//     		    			    //WICED_BT_TRACE("RSSI FILT\n");
+//     		    		        wiced_hal_gpio_set_pin_output( LED_GPIO_17, GPIO_PIN_OUTPUT_HIGH);
+//     		    		        start_TreturnfA();
+//     						}*/
+////     						 char *p_dataDm2 = strstr(datam_buffer2,dataV_DM);
+////     						 if(!p_dataDm2)
+////     						 {
+//         		    			    //WICED_BT_TRACE("RSSI FILT\n");
+//    				value_AL=WICED_TRUE;
+//    				wiced_hal_gpio_set_pin_output( LED_GPIO_04, GPIO_PIN_OUTPUT_HIGH);
+//    				//start_TreturnfA();
+//    				start_TreturnfAR();
+//    				if(value_alrm)
+//    				{
+//    					value_alrm=WICED_FALSE;
+//    					start_alrm();
+//    				}
+//
+//     						// }
+//
+//    			}
+//
+//    		}
+//    	}
+//     			   //----------------------------------------------
+//        	    	if(dataFiltALV[0]== 8 || dataFiltALV[0]== 12)
+//        	    	{
+//    			   if(p_scan_result->rssi>=-125 &&  gap_t1 == WICED_FALSE)
+//    			   {
+//    					if(datac_mV > datac_menviadaV)
+//    					{
+//    						 //WICED_BT_TRACE("CVL%d,",datac_mV - datac_menviadaV2);  //  SCL2
+////    						 char *p_dataDmV2 = strstr(datam_bufferV2,dataV_DMV);
+////    						 if(!p_dataDmV2)
+////    						 {
+//        		    			    //WICED_BT_TRACE("RSSI FILTV\n");
+//        		    			    value_AV=WICED_TRUE;
+//        		    			    wiced_hal_gpio_set_pin_output( LED_GPIO_04, GPIO_PIN_OUTPUT_HIGH);
+//        		    			    //start_TreturnfAV();
+//        		    			    start_TreturnfAVR();
+//        		    			    if(value_alrm)
+//        		    			    {
+//        		    			   	  value_alrm=WICED_FALSE;
+//        		    			      start_alrm();
+//        		    			    }
+//
+//    						 //}
+//    					}
+//    					else
+//    					{
+//    						 //WICED_BT_TRACE("CVL%d,",datac_mV - datac_menviadaV2);  //  SCL2
+////    						 char *p_dataDmV2 = strstr(datam_bufferV2,dataV_DMV);
+////    						 if(!p_dataDmV2)
+////    						 {
+//        		    			    //WICED_BT_TRACE("RSSI FILTV\n");
+//        		    			    value_AV=WICED_TRUE;
+//        		    			    wiced_hal_gpio_set_pin_output( LED_GPIO_04, GPIO_PIN_OUTPUT_HIGH);
+//        		    			    //start_TreturnfAV();
+//        		    			    start_TreturnfAVR();
+//        		    			    if(value_alrm)
+//        		    			    {
+//        		    			   	  value_alrm=WICED_FALSE;
+//        		    			      start_alrm();
+//        		    			    }
+//
+//    						// }
+//    					}
+//
+//    			   }
+//        	    }
+//        	    }
     		   //--------------------------------------------------------------------
 }
 

@@ -215,6 +215,8 @@ int8_t datac_mV2=0;
 int8_t datac_mV3=0;
 
 int8_t datac_stV=0;
+
+uint8_t *p_name_L=NULL;
 //---------------------------------------------------------------
 
 static void        Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uint8_t *p_adv_data );
