@@ -333,7 +333,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
     		   	   char *p_dataDm = strstr(datam_buffer,dataV_DM);
     			   if(!p_dataDm)
     			   {
-    				   if( gap_t1 == WICED_FALSE )			/* uando entra aqui? */
+    				   if( gap_t1 == WICED_FALSE && datac_m < val_limit)			/* uando entra aqui? */
     				   {
 						  memcpy(&datam_buffer[data_mc3],dataV_DM,6);
 						  data_mc3+=6;
@@ -446,7 +446,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
     				   }*/
 
     				   //------------------------------------------------
-    				    if (gap_t1== WICED_TRUE && st_Tipe==0x01 )
+    				    if (gap_t1== WICED_TRUE && st_Tipe==0x01 && datac_m2 < val_limit)
 						   {
 							 char *p_dataDm2 = strstr(datam_buffer2,dataV_DM);
 							 if(!p_dataDm2)
@@ -457,7 +457,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 							 //WICED_BT_TRACE("Si contiene lamparas\n");
 							 }
 						   }
-    				    else if (value_p1== WICED_FALSE)
+    				    else if (value_p1== WICED_FALSE && datac_m2 < val_limit)
     				    {
 							 char *p_dataDm2 = strstr(datam_buffer2,dataV_DM);
 							 if(!p_dataDm2)
@@ -468,7 +468,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 							 //WICED_BT_TRACE("Si contiene lamparas2\n");
 							 }
     				    }
-    				    else if(value_p1 == WICED_TRUE)
+    				    else if(value_p1 == WICED_TRUE && datac_m2 < val_limit && datac_m3 < val_limit)
     				    {
 
 							 char *p_dataDm2 = strstr(datam_buffer2,dataV_DM);
@@ -716,7 +716,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
     		   	   char *p_dataDmV = strstr(datam_bufferV,dataV_DMV);
     			   if(!p_dataDmV)
     			   {
-    				   if( gap_t1 == WICED_FALSE )
+    				   if( gap_t1 == WICED_FALSE && datac_mV < val_limit)
     				   {
 							  memcpy(&datam_bufferV[data_mc3V],dataV_DMV,6);
 							  data_mc3V+=6;
@@ -835,7 +835,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 
 
     				   //---------------------------------------------------
-    				   if ( gap_t1== WICED_TRUE && st_Tipe==0x0b)
+    				   if ( gap_t1== WICED_TRUE && st_Tipe==0x0b && datac_mV2 < val_limit)
 					   {
 							 char *p_dataDmV2 = strstr(datam_bufferV2,dataV_DMV);
 							 if(!p_dataDmV2)
@@ -847,7 +847,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 							 }
 					   }
 
-						else if (value_pV1== WICED_FALSE)
+						else if (value_pV1== WICED_FALSE && datac_mV2 < val_limit)
 						{
 								 char *p_dataDmV2 = strstr(datam_bufferV2,dataV_DMV);
 								 if(!p_dataDmV2)
@@ -858,7 +858,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 								 //WICED_BT_TRACE("Si contiene lamparas2\n");
 								 }
 						}
-						else if(value_pV1 == WICED_TRUE)
+						else if(value_pV1 == WICED_TRUE && datac_mV2 < val_limit && datac_mV3 < val_limit)
 						{
 
 								 char *p_dataDmV2 = strstr(datam_bufferV2,dataV_DMV);
@@ -1427,6 +1427,8 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
     	    	   		}
     	    	   		else
     	    	   		{
+    	    	   			if(datac_mdbs < val_limit)
+    	    	   			{
     	    	   			//WICED_BT_TRACE("NNNNNNNNRRR7\n");
     	    				      //indice = sK - substr3;
     	    				      //WICED_BT_TRACE("3BACK La cadena '%s',  en la posición %d\n", sK, indice);
@@ -1449,7 +1451,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 
     						 }
     	//----------------------------------------------------------------------------
-
+    	    	   			}
     	    	         		 //WICED_BT_TRACE("Data server1: %B\n",&p_data3[8]);
     	    	         		 //WICED_BT_TRACE("Data server2: %B\n",&p_data3[9]);
 

@@ -10,6 +10,7 @@
 
       #define clk_radc 20
       #define clk_radc120 120
+      #define val_limit 56
 	  wiced_timer_t timer_radc;
 	  void        f_timer_radc( uint32_t data );
 
