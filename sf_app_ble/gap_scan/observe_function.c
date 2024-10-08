@@ -1108,7 +1108,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 		   //--------------------------------------------------------------------
 		   	   	//-----------------------------------------------------------
 		   		memcpy(dataFiltEA, p_name, 8);
-		   	   	if(memcmp(Filt_operate40, dataFiltEA, sizeof(dataFiltEA)) == 0 ||
+		   	   	if(memcmp(Filt_operate40, dataFiltEA, sizeof(dataFiltEA)) == 0 ||		/* L4SEC_EA */
 		   	    	   memcmp(Filt_operate40, dataFiltEA, sizeof(dataFiltEA)) == 0 ){//filtro de nombres
 
 
@@ -1185,7 +1185,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 		   				  //value_EA = WICED_TRUE;
 		   				  //start_TreturnEA();
 		   	    	}
-		   	   	   else if(memcmp(Filt_operate101, dataFiltEA, sizeof(dataFiltEA)) == 0 ||
+		   	   	   else if(memcmp(Filt_operate101, dataFiltEA, sizeof(dataFiltEA)) == 0 ||  /* L4SEC BL */
 		   	    	   memcmp(Filt_operate101, dataFiltEA, sizeof(dataFiltEA)) == 0 ){//filtro de nombres
 
 		   	      	      WICED_BT_TRACE("BNM|");
@@ -1276,7 +1276,6 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 		   	    	}
 
 		   	      memcpy(dataFiltLV, p_name, 5);
-
 		   	    	 if(memcmp(Filt_operate1, dataFiltLV, sizeof(dataFiltLV)) == 0 ||
 		   	    	    	memcmp(Filt_operate1, dataFiltLV, sizeof(dataFiltLV)) == 0 )
 		   	    	{
@@ -1314,7 +1313,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 
 		   	    	}
 
-		   	    	 else if(memcmp(Filt_AB, dataFiltLV, sizeof(dataFiltLV)) == 0 ||
+		   	    	 else if(memcmp(Filt_AB, dataFiltLV, sizeof(dataFiltLV)) == 0 ||	/* L41RD */ /* 4c 34 31 52 44 */
 		   	    	    	memcmp(Filt_AB, dataFiltLV, sizeof(dataFiltLV)) == 0 )
 		   	    	{
 
@@ -2358,14 +2357,14 @@ void exam_gpio(void)
 	}*/
 	if(datac_menviada2>0 && value_ach == WICED_FALSE)
 	{
-		Start_Timerach();
+		Start_Timerach(4);
 		value_ach = WICED_TRUE;
 		//WICED_BT_TRACE("ENTER RETR\n");
 	}
 
 	if(datac_menviadaV2>0 && value_ach == WICED_FALSE)
 	{
-		Start_Timerach();
+		Start_Timerach(4);
 		value_achV = WICED_TRUE;
 		//WICED_BT_TRACE("ENTER RETRV\n");
 	}
@@ -2485,7 +2484,7 @@ void evalue_ach(void)
 	if(datac_menviada2>0 && datac_menviadaV2>0 && value_rah==WICED_FALSE)
 	{
 		value_rah=WICED_TRUE;
-		Start_Timerach();
+		Start_Timerach(1);
 		WICED_BT_TRACE("Event MLFB\n");
 		gap_cfb(&datam_buffer2[data_pr]);
 		WICED_BT_TRACE("Event MLF %B\n",&datam_buffer2[data_pr]);
@@ -2502,7 +2501,7 @@ void evalue_ach(void)
 	else if(datac_menviada2>0 && datac_menviadaV2>0 && value_rah==WICED_TRUE)
 	{
 		value_rah=WICED_FALSE;
-	    Start_Timerach();
+	    Start_Timerach(1);
 		WICED_BT_TRACE("Event MLFBV\n");
 		gap_cfbV(&datam_bufferV2[data_prV]);
 		WICED_BT_TRACE("Event MLFV %B\n",&datam_bufferV2[data_prV]);
@@ -2518,7 +2517,7 @@ void evalue_ach(void)
 	}
 	else if(datac_menviada2>0 && datac_menviadaV2==0 )
 	{
-		Start_Timerach();
+		Start_Timerach(1);
 		WICED_BT_TRACE("Event MLFB2\n");
 		gap_cfb(&datam_buffer2[data_pr]);
 		WICED_BT_TRACE("Event MLF2 %B\n",&datam_buffer2[data_pr]);
@@ -2534,7 +2533,7 @@ void evalue_ach(void)
 	}
 	else if(datac_menviada2==0 && datac_menviadaV2>0 )
 	{
-	    Start_Timerach();
+	    Start_Timerach(1);
 		WICED_BT_TRACE("Event MLFBV2\n");
 		gap_cfbV(&datam_bufferV2[data_prV]);
 		WICED_BT_TRACE("Event MLFV2 %B\n",&datam_bufferV2[data_prV]);

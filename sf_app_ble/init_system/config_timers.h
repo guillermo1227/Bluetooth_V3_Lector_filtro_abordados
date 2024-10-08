@@ -43,7 +43,7 @@ void start_alrm(void);
 void stop_alrm(void);
 void start_TreturnEA(void);
 void init_event_er(void);
-void Start_Timerach(void);
+void Start_Timerach(uint8_t);
 void Stop_Timerach(void);
 void start_TreturnCER(void);
 

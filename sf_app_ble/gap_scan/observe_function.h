@@ -255,7 +255,7 @@ extern             void init_gap(void);
 extern             void start_alrm(void);
 extern             void start_TreturnEA(void);
 extern             void init_event_er(void);
-extern             void Start_Timerach(void);
+extern             void Start_Timerach(uint8_t);
 extern             void Stop_Timerach(void);
 extern             void start_TreturnCER(void);
 

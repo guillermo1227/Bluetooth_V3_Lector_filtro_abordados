@@ -187,9 +187,18 @@ void init_event_er(void)
 	wiced_start_timer( &timer_er, clock_gap1);
 }
 
-void Start_Timerach(void)
+void Start_Timerach(uint8_t switch1)
 {
-	wiced_start_timer( &timer_ach, 1000);
+	switch(switch1){
+	case 1:
+		wiced_start_timer( &timer_ach, 1000);
+		WICED_BT_TRACE("---------------------->Tiempo de 1 segundo\n");
+		break;
+	case 4:
+		wiced_start_timer( &timer_ach, 4000);
+		WICED_BT_TRACE("---------------------->Tiempo de 4 segundo\n");
+		break;
+	}
 }
 void Stop_Timerach(void)
 {
