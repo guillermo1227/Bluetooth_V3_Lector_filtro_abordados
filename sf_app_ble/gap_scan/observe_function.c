@@ -1293,6 +1293,7 @@ void Observer_scan_result_cback( wiced_bt_ble_scan_results_t *p_scan_result, uin
 		   	      	     // WICED_BT_TRACE( "%B\n", static_addr );
 		   	    	      //wiced_hal_puart_print(p_name);
 
+
 		   	    	}
 
 		   	    	 else if(memcmp(Filt_operate2, dataFiltLV, sizeof(dataFiltLV)) == 0 ||
